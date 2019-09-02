@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>PuzzleWorkArea.qml</file>
+        <file>PuzzleWorkAreaUI.qml</file>
+        <file>PuzzleCtrlArea.qml</file>
+        <file>PuzzleCtrlAreaUI.qml</file>
+    </qresource>
+</RCC>
