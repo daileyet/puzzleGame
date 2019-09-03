@@ -21,6 +21,17 @@ Item {
         visible: false
 
     }
+    Rectangle{
+        color: "#00000000"
+        anchors.rightMargin: blockBorder
+        anchors.leftMargin: blockBorder
+        anchors.bottomMargin: blockBorder
+        anchors.topMargin: blockBorder
+        anchors.fill: parent
+        border.width: blockBorder;
+        border.color: "#FFFFFF"
+    }
+
     Repeater {
         id: blocks
         signal blockClicked(int placedIndex);
@@ -29,6 +40,7 @@ Item {
             property url blockImageUrl:"";
             property int blockIndex: index;
             property int blockPlacedIndex: index;
+            property bool blockImageVisible: true;
             color: "#00000000"
             width: blockW
             height: blockH
@@ -47,6 +59,7 @@ Item {
                 anchors.right: parent.right
                 fillMode: Image.Stretch
                 source: blockImageUrl
+                visible: blockImageVisible
             }
             MouseArea{
                 id:blockMouseArea;

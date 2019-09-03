@@ -40,7 +40,7 @@ PuzzleWorkAreaUI {
         isStarted=true;
         randomBlockPlace();
         renderPuzzle();
-        root.focus=true;
+
     }
 
     function renderPuzzle(){
@@ -58,6 +58,7 @@ PuzzleWorkAreaUI {
             }
             blockItem.blockImageUrl = imageUrl;
         }
+        root.focus=true;
     }
 
     function cleanPuzzle(){
@@ -69,16 +70,29 @@ PuzzleWorkAreaUI {
         }
     }
 
-    function showOrignalPuzzle(){
-
+    function showOrignalPuzzle(ignoreStared){
+        var isIgnoreStared = ignoreStared || false;
+        if(isIgnoreStared===false && !isStarted)
+            return;
         orignalImage.source = "image://puzzle/"+model.stage+"/-1";
         orignalImage.visible = true;
         orignalImage.z = 99;
+        for(var i=0;i<blocks.count;i++){
+            var blockItem = blocks.itemAt(i);
+            blockItem.blockImageVisible=false;
+        }
     }
 
-    function hideOrignalPuzzle(){
-
+    function hideOrignalPuzzle(ignoreStared){
+        var isIgnoreStared = ignoreStared || false;
+        if(isIgnoreStared===false && !isStarted)
+            return;
         orignalImage.visible = false;
+        for(var i=0;i<blocks.count;i++){
+            var blockItem = blocks.itemAt(i);
+            blockItem.blockImageVisible=true;
+        }
+        root.focus=true;
     }
 
     function randomBlockPlace(){
@@ -115,6 +129,7 @@ PuzzleWorkAreaUI {
         item1.blockPlacedIndex = item2.blockPlacedIndex;
         item2.blockPlacedIndex = tmpPlacedIndex;
         model.stageSteps = model.stageSteps + 1;
+        root.focus=true;
     }
 
     function moveUp(){

@@ -24,6 +24,7 @@ class Data : public QObject
     DECLARE_PROPERTY(int,whiteBlockIndex,WhiteBlockIndex)
     DECLARE_PROPERTY(int,stage,Stage)
     DECLARE_PROPERTY(int,stageSteps,StageSteps)
+    DECLARE_PROPERTY(int,level,Level)
 public:
     explicit Data(QObject *parent = nullptr);
     BlockImage getBlockImage(QString index);
@@ -42,11 +43,12 @@ signals:
     void whiteBlockIndexChanged();
     void stageStepsChanged();
     void stageChanged();
+    void levelChanged();
 public slots:
     void onOriginalImageUrlChanged();
     void onBlockWidthChanged();
     void onBlockHeightChanged();
-
+    void onLevelChanged();
 private:
 
 

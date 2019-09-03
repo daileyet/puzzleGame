@@ -2,8 +2,9 @@
 #include <QDebug>
 Data::Data(QObject *parent) : QObject(parent)
 {
-    m_blockCountInVertical= 3;
-    m_blockCountInHorizontal = 3;
+    m_level = 3;
+    m_blockCountInVertical= m_level;
+    m_blockCountInHorizontal = m_level;
     m_blockBorderSize = 1;
     m_stage = 0;
     m_stageSteps = 0;
@@ -11,7 +12,7 @@ Data::Data(QObject *parent) : QObject(parent)
     this->connect(this,SIGNAL(originalImageUrlChanged()),SLOT(onOriginalImageUrlChanged()));
     this->connect(this,SIGNAL(blockWidthChanged()),SLOT(onBlockWidthChanged()));
     this->connect(this,SIGNAL(blockHeightChanged()),SLOT(onBlockHeightChanged()));
-
+    this->connect(this,SIGNAL(levelChanged()),SLOT(onLevelChanged()));
 }
 
 void Data::onOriginalImageUrlChanged()
@@ -20,6 +21,12 @@ void Data::onOriginalImageUrlChanged()
     int imagePaintW = blockWidth()* blockCountInHorizontal();
     int imagePaintH = blockHeight() * blockCountInVertical();
     m_originalImage = m_originalImage.scaled(QSize(imagePaintW,imagePaintH),Qt::KeepAspectRatioByExpanding);
+}
+
+void Data::onLevelChanged()
+{
+    setBlockCountInVertical(m_level);
+    setBlockCountInHorizontal(m_level);
 }
 
 

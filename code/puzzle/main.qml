@@ -27,7 +27,7 @@ Window {
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.bottomMargin: 5
         anchors.top: puzzleCrtlArea.bottom
         anchors.topMargin: 0
     }
@@ -36,19 +36,23 @@ Window {
     Connections{
         target: puzzleCrtlArea
         onStartPuzzle:{
-            puzzleWorkArea.hideOrignalPuzzle();
+            puzzleWorkArea.hideOrignalPuzzle(true);
             puzzleWorkArea.startGame();
         }
         onPuzzleReloaded:{
             puzzleWorkArea.isStarted=false;
             puzzleWorkArea.cleanPuzzle();
-            puzzleWorkArea.showOrignalPuzzle();
+            puzzleWorkArea.showOrignalPuzzle(true);
         }
         onPuzzleModelChanged:{
             if(puzzleMode==1)
                 puzzleWorkArea.showOrignalPuzzle();
             else
                 puzzleWorkArea.hideOrignalPuzzle();
+        }
+        onPuzzleLevelChanged:{
+            puzzleWorkArea.hideOrignalPuzzle(true);
+            puzzleWorkArea.startGame();
         }
     }
 

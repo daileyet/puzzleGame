@@ -22,9 +22,9 @@ Item {
     Button {
         id: btnLoad
         width: 60
-        height: 20
+        height: 25
         text: qsTr("Load")
-        visible: false
+        visible: true
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
@@ -33,10 +33,10 @@ Item {
     Button {
         id: btnPreview
         width: 70
-        height: 20
+        height: 25
         text: qsTr("Preview")
-        visible: false
-        anchors.left: btnStart.right
+        visible: true
+        anchors.left: btnLoad.right
         anchors.leftMargin: 5
         anchors.verticalCenter: parent.verticalCenter
     }
@@ -44,19 +44,19 @@ Item {
     Button {
         id: btnStart
         width: 60
-        height: 20
+        height: 25
         text: qsTr("Start")
         anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: 0
+        anchors.left: btnPreview.right
+        anchors.leftMargin: 5
     }
 
     ComboBox {
         id: comboBoxLevel
         y: 14
         width: 100
-        height: 20
-        font.pointSize: 8
+        height: 25
+        font.pointSize: 13
         wheelEnabled: false
         flat: false
         anchors.left: btnStart.right
@@ -68,6 +68,7 @@ Item {
         id: txtStep
         width: 15
         height: 20
+        color: "#ffffff"
         anchors.verticalCenter: parent.verticalCenter
         font.bold: true
         verticalAlignment: Text.AlignVCenter
@@ -84,6 +85,20 @@ Item {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

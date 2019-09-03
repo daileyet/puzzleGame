@@ -5,11 +5,13 @@ PuzzleCtrlAreaUI {
     signal startPuzzle();
     signal puzzleReloaded();
     signal puzzleModelChanged(int puzzleMode);
+    signal puzzleLevelChanged(int puzzleLevel);
     implicitHeight: 50;
     implicitWidth: 400;
 
     txtStepText: model.stageSteps;
     comboBoxLevel.model: ListModel{
+        id:levelModel
         ListElement{display:"Normal";value:3}
         ListElement{display:"Hard";value:4}
     }
@@ -43,6 +45,11 @@ PuzzleCtrlAreaUI {
 
     Connections{
         target: comboBoxLevel
+        onCurrentIndexChanged:{
+            var puzzleLevel = levelModel.get(comboBoxLevel.currentIndex).value;
+            model.level = puzzleLevel;
+            puzzleLevelChanged(puzzleLevel);
+        }
     }
 
     Connections{
