@@ -5,5 +5,8 @@
         <file>PuzzleWorkAreaUI.qml</file>
         <file>PuzzleCtrlArea.qml</file>
         <file>PuzzleCtrlAreaUI.qml</file>
+        <file>components/MyButton.qml</file>
+        <file>components/MyComboBox.qml</file>
+        <file>components/WinInfo.qml</file>
     </qresource>
 </RCC>

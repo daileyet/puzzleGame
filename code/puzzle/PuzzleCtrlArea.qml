@@ -6,6 +6,7 @@ PuzzleCtrlAreaUI {
     signal puzzleReloaded();
     signal puzzleModelChanged(int puzzleMode);
     signal puzzleLevelChanged(int puzzleLevel);
+    signal puzzleCheat();
     implicitHeight: 50;
     implicitWidth: 400;
 
@@ -23,6 +24,14 @@ PuzzleCtrlAreaUI {
             puzzlePictureFileDialog.open();
         }
     }
+
+    Connections{
+        target: btnCheat
+        onClicked:{
+           puzzleCheat();
+        }
+    }
+
 
     Connections{
         target: btnPreview

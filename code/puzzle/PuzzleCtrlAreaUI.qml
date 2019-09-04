@@ -1,7 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.5
 import Qt.labs.platform 1.1
-
+import "components"
 Item {
     id: topArea
     height: 47
@@ -11,6 +11,7 @@ Item {
     property alias btnStart: btnStart
     property alias btnLoad: btnLoad
     property alias puzzlePictureFileDialog: puzzlePictureFileDialog
+    property alias btnCheat:btnCheat;
     width: 640
     anchors.top: parent.top
     anchors.topMargin: 0
@@ -19,7 +20,7 @@ Item {
     anchors.left: parent.left
     anchors.leftMargin: 0
 
-    Button {
+    MyButton {
         id: btnLoad
         width: 60
         height: 25
@@ -30,7 +31,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
     }
 
-    Button {
+    MyButton {
         id: btnPreview
         width: 70
         height: 25
@@ -41,7 +42,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
     }
 
-    Button {
+    MyButton {
         id: btnStart
         width: 60
         height: 25
@@ -51,12 +52,12 @@ Item {
         anchors.leftMargin: 5
     }
 
-    ComboBox {
+    MyComboBox {
         id: comboBoxLevel
         y: 14
         width: 100
         height: 25
-        font.pointSize: 13
+        font.pointSize: 8
         wheelEnabled: false
         flat: false
         anchors.left: btnStart.right
@@ -78,13 +79,31 @@ Item {
         font.pixelSize: 12
     }
 
+    MyButton {
+        id: btnCheat
+        width: 60
+        height: 25
+        text: "Cheat"
+        visible: false
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: comboBoxLevel.right
+        anchors.leftMargin: 5
+    }
+
     FileDialog{
         id:puzzlePictureFileDialog
         nameFilters: ["Image files (*.png *.jpg *.bmp *.gif)"]
     }
 
 
+
 }
+
+
+
+
+
+
 
 
 

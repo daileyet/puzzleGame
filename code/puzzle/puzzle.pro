@@ -17,7 +17,10 @@ SOURCES += \
         main.cpp \
         puzzleimageprovider.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    image.qrc
+
+RC_ICONS = favicon.ico
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

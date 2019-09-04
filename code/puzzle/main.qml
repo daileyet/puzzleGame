@@ -6,6 +6,7 @@ Window {
     visible: true
     width: 640
     height: 480
+    title: qsTr("Puzzle")
 
     color: "#535353";
 
@@ -18,6 +19,7 @@ Window {
         anchors.leftMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+
     }
 
     PuzzleWorkArea{
@@ -52,7 +54,9 @@ Window {
         }
         onPuzzleLevelChanged:{
             puzzleWorkArea.hideOrignalPuzzle(true);
-            puzzleWorkArea.startGame();
+        }
+        onPuzzleCheat:{
+            puzzleWorkArea.cheat()
         }
     }
 

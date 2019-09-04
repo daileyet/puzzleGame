@@ -38,6 +38,7 @@ PuzzleWorkAreaUI {
 
     function startGame(){
         isStarted=true;
+        hideWinInfo();
         randomBlockPlace();
         renderPuzzle();
 
@@ -130,6 +131,9 @@ PuzzleWorkAreaUI {
         item2.blockPlacedIndex = tmpPlacedIndex;
         model.stageSteps = model.stageSteps + 1;
         root.focus=true;
+        if(item1.isCorrect && item2.isCorrect){
+            checkCompleted();
+        }
     }
 
     function moveUp(){
@@ -187,9 +191,38 @@ PuzzleWorkAreaUI {
         }
     }
 
+    function showWinInfo(){
+        winInfo.visible=true;
+        winInfo.reStart();
+    }
+
+    function hideWinInfo(){
+        winInfo.visible=false;
+    }
+
+
+    function checkCompleted(){
+        var blockItem;
+        for(var i=0;i<blocks.count;i++){
+            blockItem = blocks.itemAt(i);
+            if(!blockItem.isCorrect)
+                return false;
+        }
+        showWinInfo();
+        return true;
+    }
+
+    function cheat(){
+        var blockItem;
+        for(var i=0;i<blocks.count;i++){
+            blockItem = blocks.itemAt(i);
+            blockItem.blockPlacedIndex = blockItem.blockIndex;
+        }
+    }
 
     Component.onCompleted: {
         model.blockWidth = root.blockW;
         model.blockHeight = root.blockH;
     }
+
 }
