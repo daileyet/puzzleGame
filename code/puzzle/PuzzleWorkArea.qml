@@ -39,14 +39,15 @@ PuzzleWorkAreaUI {
     function startGame(){
         isStarted=true;
         hideWinInfo();
-        randomBlockPlace();
-        renderPuzzle();
+        renderPuzzle(true);
 
     }
 
-    function renderPuzzle(){
+    function renderPuzzle(notIgnoreRandom){
+        var isNotIgnoreRandom = notIgnoreRandom || false;
         if(!isStarted || !model.initBlocks())
             return;
+        if(isNotIgnoreRandom)randomBlockPlace();
         var blockCount = blocks.count;
         var imageUrl ="";
         for(var i=0;i<blockCount;i++){

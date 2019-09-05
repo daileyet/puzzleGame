@@ -1,13 +1,20 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml>
+#include <QTranslator>
 #include "data.h"
 #include "puzzleimageprovider.h"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
+
+    QTranslator *translator = new QTranslator;
+    translator->load(":/app_zh_CN");
+    app.installTranslator(translator);
+
     qmlRegisterUncreatableType<Data>("com.openthinks.puzzle.data",1,0,"Data","Access DataModel");
 
     Data* model = new Data;

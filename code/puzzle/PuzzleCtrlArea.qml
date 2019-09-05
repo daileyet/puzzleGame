@@ -13,8 +13,9 @@ PuzzleCtrlAreaUI {
     txtStepText: model.stageSteps;
     comboBoxLevel.model: ListModel{
         id:levelModel
-        ListElement{display:"Normal";value:3}
-        ListElement{display:"Hard";value:4}
+        ListElement{display:qsTr("Simple");value:2}
+        ListElement{display:qsTr("Normal");value:3}
+        ListElement{display:qsTr("Hard");value:4}
     }
     comboBoxLevel.textRole: "display";
 
@@ -68,6 +69,14 @@ PuzzleCtrlAreaUI {
             model.stageSteps = 0;
             model.stage = model.stage + 1;
             puzzleReloaded();
+        }
+    }
+    Component.onCompleted: {
+        for(var i=0;i<levelModel.count;i++){
+            if(model.level === levelModel.get(i).value){
+                comboBoxLevel.currentIndex=i;
+                return ;
+            }
         }
     }
 }

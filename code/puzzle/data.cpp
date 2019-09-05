@@ -3,13 +3,13 @@
 #include <QtMath>
 Data::Data(QObject *parent) : QObject(parent)
 {
-    m_level = 3;
+    m_level = 2;
     m_blockCountInVertical= m_level;
     m_blockCountInHorizontal = m_level;
     m_blockBorderSize = 1;
     m_stage = 0;
     m_stageSteps = 0;
-    m_whiteBlockIndex = 0;
+    m_whiteBlockIndex = m_blockCountInVertical*m_blockCountInHorizontal -1 ;
     this->connect(this,SIGNAL(originalImageUrlChanged()),SLOT(onOriginalImageUrlChanged()));
     this->connect(this,SIGNAL(blockWidthChanged()),SLOT(onBlockWidthChanged()));
     this->connect(this,SIGNAL(blockHeightChanged()),SLOT(onBlockHeightChanged()));
@@ -28,6 +28,7 @@ void Data::onLevelChanged()
 {
     setBlockCountInVertical(m_level);
     setBlockCountInHorizontal(m_level);
+    setWhiteBlockIndex(m_blockCountInVertical*m_blockCountInHorizontal -1 );
 }
 
 
@@ -78,7 +79,7 @@ QImage Data::getOrignalImage()
 
 void Data::randomWhiteBlockIndex()
 {
-    setWhiteBlockIndex(rand() % (m_blockCountInVertical * m_blockCountInHorizontal));
+    //setWhiteBlockIndex(rand() % (m_blockCountInVertical * m_blockCountInHorizontal));
 }
 
 QList<int> Data::getRandomBlockPlace()
@@ -96,51 +97,132 @@ QList<int> Data::getRandomBlockPlace()
     return q;
 }
 
+void Data::swapBlockListValue(QList<int> &blockNums,const int emptyRandomIndex)
+{
+    int blockSize = blockNums.size();
+    if(emptyRandomIndex+2>=blockSize)
+    {
+        blockNums.swapItemsAt(emptyRandomIndex-1,emptyRandomIndex-2);
+    }
+    else
+    {
+        blockNums.swapItemsAt(emptyRandomIndex+1,emptyRandomIndex+2);
+    }
+}
+
 QList<int> Data::getValidRandomBlockPlace()
 {
-    QList<int> randNums;
-    while(true)
+    QList<int> randNums = getRandomBlockPlace();
+    const int blockSize = randNums.size();
+    int emptyValue = m_whiteBlockIndex;
+    int emptyRandomIndex = -1;
+    for (int i=0,j=blockSize;i<j;i++)
     {
-        randNums = getRandomBlockPlace();
-        int emptyIndex = m_whiteBlockIndex;
-
-        int reverseSize = 0, emptyRandomIndex = -1;
-        for (int i=0,j=randNums.size();i<j;i++)
+        if(emptyValue == randNums.at(i))
         {
-            if(emptyIndex == randNums.at(i))
-            {
-                emptyRandomIndex = i;
-                break;
-            }
-        }
-        //calculate inreverse order number
-        for (int i=0,j=randNums.size();i<j-1;i++) {
-            if(i==emptyRandomIndex)
-                continue;
-            int checkNum = randNums.at(i);
-
-            for(int k=i+1;k<j;k++){
-                if(k==emptyRandomIndex)
-                    continue;
-                int nextCheckNum = randNums.at(k);
-
-                if(checkNum>nextCheckNum)
-                {
-                    reverseSize++;
-                }
-            }
-        }
-
-        int checkRandrp =  reverseSize + (qFloor(emptyRandomIndex / m_blockCountInHorizontal)+ (emptyRandomIndex % m_blockCountInHorizontal));
-        int targetrp = (qFloor(emptyIndex / m_blockCountInHorizontal) + (emptyIndex % m_blockCountInHorizontal));
-        if(checkRandrp % 2 == 0 && targetrp % 2 ==0)
-        {
+            emptyRandomIndex = i;
             break;
         }
-        if(checkRandrp % 2 != 0 && targetrp % 2 !=0){
-            break;
-        }
-
     }
+
+    int emptyReverseRow = m_blockCountInVertical -  qFloor(emptyRandomIndex / m_blockCountInHorizontal);
+
+    int reverseSize = 0;
+    for (int i=0,j=blockSize;i<j-1;i++) {
+        if(i==emptyRandomIndex)
+            continue;
+        int checkNum = randNums.at(i);
+
+        for(int k=i+1;k<j;k++){
+            if(k==emptyRandomIndex)
+                continue;
+            int nextCheckNum = randNums.at(k);
+
+            if(checkNum>nextCheckNum)
+            {
+                reverseSize++;
+            }
+        }
+    }
+
+    if(blockSize % 2 != 0)//
+    {
+        if(reverseSize % 2 == 0)
+        {
+            //            return randNums;
+        }
+        else
+        {
+            swapBlockListValue(randNums,emptyRandomIndex);
+        }
+        return randNums;
+    }
+
+    if(emptyReverseRow % 2 == 0)
+    {
+        if(reverseSize % 2 == 0)
+        {
+            swapBlockListValue(randNums,emptyRandomIndex);
+        }
+        else{}
+    }
+    else
+    {
+        if(reverseSize % 2 == 0){}
+        else
+        {
+            swapBlockListValue(randNums,emptyRandomIndex);
+        }
+    }
+
     return randNums;
 }
+
+//QList<int> Data::getValidRandomBlockPlace()
+//{
+//    QList<int> randNums;
+//    while(true)
+//    {
+//        randNums = getRandomBlockPlace();
+//        int emptyIndex = m_whiteBlockIndex;
+
+//        int reverseSize = 0, emptyRandomIndex = -1;
+//        for (int i=0,j=randNums.size();i<j;i++)
+//        {
+//            if(emptyIndex == randNums.at(i))
+//            {
+//                emptyRandomIndex = i;
+//                break;
+//            }
+//        }
+//        //calculate inreverse order number
+//        for (int i=0,j=randNums.size();i<j-1;i++) {
+//            if(i==emptyRandomIndex)
+//                continue;
+//            int checkNum = randNums.at(i);
+
+//            for(int k=i+1;k<j;k++){
+//                if(k==emptyRandomIndex)
+//                    continue;
+//                int nextCheckNum = randNums.at(k);
+
+//                if(checkNum>nextCheckNum)
+//                {
+//                    reverseSize++;
+//                }
+//            }
+//        }
+
+//        int checkRandrp =  reverseSize + (qFloor(emptyRandomIndex / m_blockCountInHorizontal)+ (emptyRandomIndex % m_blockCountInHorizontal));
+//        int targetrp = (qFloor(emptyIndex / m_blockCountInHorizontal) + (emptyIndex % m_blockCountInHorizontal));
+//        if(checkRandrp % 2 == 0 && targetrp % 2 ==0)
+//        {
+//            break;
+//        }
+//        if(checkRandrp % 2 != 0 && targetrp % 2 !=0){
+//            break;
+//        }
+
+//    }
+//    return randNums;
+//}

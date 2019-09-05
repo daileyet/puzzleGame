@@ -53,7 +53,7 @@ public slots:
     void onBlockHeightChanged();
     void onLevelChanged();
 private:
-
+    void swapBlockListValue(QList<int> &blockNums,const int emptyRandomIndex);
 
 
 private:

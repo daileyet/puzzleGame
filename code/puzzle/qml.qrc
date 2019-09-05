@@ -8,5 +8,6 @@
         <file>components/MyButton.qml</file>
         <file>components/MyComboBox.qml</file>
         <file>components/WinInfo.qml</file>
+        <file>PuzzleMenuBar.qml</file>
     </qresource>
 </RCC>

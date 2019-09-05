@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 ComboBox {
     id: control
+    font.pointSize: 8;
     model: ListModel{
         ListElement{display:"Normal";value:3}
         ListElement{display:"Hard";value:4}

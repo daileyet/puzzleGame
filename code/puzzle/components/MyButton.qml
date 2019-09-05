@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 Button {
     id: control
     text: qsTr("Button")
+    font.pointSize: 8;
 
     contentItem: Text {
         text: control.text

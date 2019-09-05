@@ -83,7 +83,7 @@ Item {
         id: btnCheat
         width: 60
         height: 25
-        text: "Cheat"
+        text: qsTr("Cheat")
         visible: false
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: comboBoxLevel.right
