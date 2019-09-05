@@ -2,7 +2,7 @@ import QtQuick 2.4
 
 PuzzleWorkAreaUI {
     property bool isStarted:false;
-    property int whiteBlockIndex: whiteBlockIndex;
+    property int whiteBlockIndex: model.whiteBlockIndex;
     property int blockMaxCount: blockCountInVertical*blockCountInHorizontal;
 
     id:root;
@@ -97,7 +97,9 @@ PuzzleWorkAreaUI {
     }
 
     function randomBlockPlace(){
-        var randomPlaces = model.getRandomBlockPlace();
+        model.randomWhiteBlockIndex();
+        var randomPlaces = model.getValidRandomBlockPlace();
+        console.log(randomPlaces,model.whiteBlockIndex)
         for(var i in randomPlaces){
             var blockItem = blocks.itemAt(i);
             blockItem.blockPlacedIndex = randomPlaces[i];

@@ -9,6 +9,7 @@ struct BlockImage
 {
     QImage image;
     int index;
+    int placedIndex;
 };
 
 
@@ -31,7 +32,9 @@ public:
     Q_INVOKABLE bool initBlocks();
     QImage getOrignalImage();
 
-    Q_INVOKABLE QList<int> getRandomBlockPlace();
+    Q_INVOKABLE void randomWhiteBlockIndex();
+    QList<int> getRandomBlockPlace();
+    Q_INVOKABLE QList<int> getValidRandomBlockPlace();
 
 signals:
     void originalImageUrlChanged();
